@@ -17,10 +17,8 @@
             height:100%;
         }
         #canvas{
-
             width:100%;
-            height:100%;         
-
+            height:100%; 
         }
         .ui-wrapper{
             position: relative;
@@ -33,14 +31,37 @@
             height: 10%;
             width: 100%;
         }
+        .headerContainer img{
+            margin-top:2%;
+            width: 35%;
+            margin-left:4% ;
+        }
         .footerContainer{
             position: absolute;
             bottom: 5%;
         }
-        .scrollerContainer{
+        .countryContainer{
+            background-color: red;
+            height: 7%;
+            width:30%;
+            margin-top:8%;
+            margin-left:5%;
+        }
+        .teamScoreContainer{
+            position: absolute;
+            background-color: aqua;
+            height: 7%;
+            width:30%;
+            margin-top:0px;
+            right: 0;
+            /* margin-left:5%; */
+        }
+        .playerScrollerContainer{
             background-color: brown;
-            width: 15%;
+            margin-top:25%;
+            width: 150px;
             height:30%;
+            margin-left:5%;
         }
     </style>
     <script src="js/libs/jquery-3.6.4.min.js"></script>   
@@ -48,9 +69,11 @@
         <div class="wrapper">
             <div class="ui-wrapper">
                 <div class="headerContainer">
-
+                    <img src="assets/ICC-World-Test-Championship.jpg">
                 </div>
-                <div class="scrollerContainer">
+                <div class="countryContainer"></div>
+                <div class="teamScoreContainer"></div>
+                <div class="playerScrollerContainer">
 
                 </div>
                 <div class="footerContainer" id="footerContainer">
