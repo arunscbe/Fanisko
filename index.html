@@ -7,6 +7,9 @@
         html, body {
             background-color: aqua;
   height: 100%;
+  margin: 0;
+   padding: 0;
+   overflow: hidden; 
 }
         .wrapper{
             margin:auto;
@@ -19,13 +22,31 @@
             height:100%;         
 
         }
+        .ui-wrapper{
+            background-color: bisque;
+            height: 100%;
+            width: 100%;
+        }
+        .headerContainer{
+            background-color:black;
+            height: 10%;
+            width: 100%;
+        }
     </style>
     <script src="js/libs/jquery-3.6.4.min.js"></script>   
     <body>
         <div class="wrapper">
-      <div id = "canvas"></div>
+            <div class="ui-wrapper">
+                <div class="headerContainer">
+
+                </div>
+                <div class="footerContainer" id="footerContainer">
+                </div>
+            </div>
+         <div id = "canvas"></div>
       </div>
     </body>
-    <script type="module"src="js/config.js"></script>
+    <script src="js/ui.js"></script>
+    <!-- <script type="module"src="js/config.js"></script> -->
     
 </html>

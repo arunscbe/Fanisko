@@ -76,8 +76,8 @@ class sceneSetup {
         this.rendering();
     }
     rendering() {
-        this.renderer = new THREE.WebGLRenderer({ antialias: true });
-        this.renderer.setClearColor(0xffff00);
+        this.renderer = new THREE.WebGLRenderer({ antialias: true,alpha: true  });
+        this.renderer.setClearColor(0x000000,0);
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
         this.renderer.outputEncoding = THREE.sRGBEncoding;
