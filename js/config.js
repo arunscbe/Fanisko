@@ -11,7 +11,7 @@ $(document).ready(function () {
     if (detect == 1) {
         init = new sceneSetup(70, 1, 1000, 400, 400, 400);
         modelLoad = new objLoad();
-        //   modelLoad.Model();
+         modelLoad.Model();
          addLines(0,0,97,24);
     } else if (detect == 0) {
         alert("PLEASE ENABLE WEBGL IN YOUR BROWSER....");
@@ -151,7 +151,7 @@ class sceneSetup {
         this.rendering();
     }
     rendering() {
-        this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        this.renderer = new THREE.WebGLRenderer({ antialias: true ,alpha:true});
         this.renderer.setClearColor(0x000000,0);
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
@@ -204,6 +204,7 @@ class objLoad {
     }
 
     Model() {
+        console.log("sdsd...");
         this.loader = new GLTFLoader();
         this.loader.load(gltfpath, gltf => {            
             this.mesh = gltf.scene;
