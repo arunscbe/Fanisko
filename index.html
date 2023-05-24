@@ -9,7 +9,7 @@
   height: 100%;
   margin: 0;
    padding: 0;
-   overflow: hidden; 
+   /* overflow: hidden;  */
 }
         .wrapper{
             margin:auto;
@@ -21,8 +21,8 @@
             height:100%; 
         }
         .ui-wrapper{
-            position: relative;
-            background-color: bisque;
+            position: absolute;
+            /* background-color: bisque; */
             height: 100%;
             width: 100%;
         }
@@ -44,24 +44,47 @@
             background-color: red;
             height: 7%;
             width:30%;
+            float: left;
             margin-top:8%;
             margin-left:5%;
         }
         .teamScoreContainer{
-            position: absolute;
-            background-color: aqua;
+            /* position: absolute; */
+            background-color: rgb(144, 144, 9);
             height: 7%;
             width:30%;
-            margin-top:0px;
-            right: 0;
-            /* margin-left:5%; */
+            margin-top:8%;
+            float:right;
+            margin-right:5%;
         }
         .playerScrollerContainer{
             background-color: brown;
-            margin-top:25%;
+            margin-top:50%;
             width: 150px;
             height:30%;
             margin-left:5%;
+        }
+        .teamFlagContainer{
+            background-color: blue;
+            float:left
+        }
+        .scoreWrapper{
+            background-color: blueviolet;
+            float: right;
+            margin-right:50px;
+        }
+        .scoreWrapper h1{
+            margin: 0;
+            font-size: 45px;
+            background-color: black;
+            color:white;
+            font-family: Arial, sans-serif;
+        }
+        .scoreWrapper p{
+            margin: 0;
+            font-size:25px;
+            background-color: red;
+            /* width:50%; */
         }
     </style>
     <script src="js/libs/jquery-3.6.4.min.js"></script>   
@@ -71,11 +94,20 @@
                 <div class="headerContainer">
                     <img src="assets/ICC-World-Test-Championship.jpg">
                 </div>
-                <div class="countryContainer"></div>
-                <div class="teamScoreContainer"></div>
-                <div class="playerScrollerContainer">
-
-                </div>
+                    <div class="countryContainer"></div>
+                    <div class="teamScoreContainer">
+                        <div class="countryFlag">
+                            <div class="teamFlagContainer">
+                                <img class="teamFlag" src="assets/indiaFlag.jpg"/>
+                            </div>
+                            <div class="scoreWrapper">
+                                <h1 class="teamScore">180/2</h1>
+                                <p class="overs">25.5 Ovr</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playerScrollerContainer">
+                    </div>
                 <div class="footerContainer" id="footerContainer">
                 </div>
             </div>
