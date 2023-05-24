@@ -3,18 +3,16 @@ import * as THREE from './libs/three.module.js';
 import {OrbitControls} from './libs/OrbitControls.js';
 // import {onWindowResize} from './resize.js'
 let init, modelLoad;
-let gltfpath = "assets/path.glb";
+let gltfpath = "assets/cricket_stadium.glb";
 let texLoader = new THREE.TextureLoader();
-let arrayObjects = [];
-let raycaster = new THREE.Raycaster(),mouse = new THREE.Vector2(),SELECTED;
 
 $(document).ready(function () {
     let detect = detectWebGL();
     if (detect == 1) {
-        init = new sceneSetup(70, 1, 1000, 5, 2, 5);
+        init = new sceneSetup(70, 1, 1000, 400, 400, 400);
         modelLoad = new objLoad();
-        // modelLoad.Model();
-        init.renderer.domElement.addEventListener('pointerdown', onDocumentMouseDown, true);
+        //   modelLoad.Model();
+         addLines(0,0,97,24);
     } else if (detect == 0) {
         alert("PLEASE ENABLE WEBGL IN YOUR BROWSER....");
     } else if (detect == -1) {
@@ -25,6 +23,83 @@ $(document).ready(function () {
 
 
 });
+
+function addLines(x1,y1,x2,y2){ // 2,4,-1,4
+    let startPointX = x1;
+    let startPointY = y1;
+    let endPointX = x2;
+    let endPointY = y2;
+
+    
+    // const material = new THREE.MeshNormalMaterial()
+    // let geometry = new THREE.BufferGeometry()
+    // const points = [
+    //     // new THREE.Vector3((startPointX * 1) +.2, 10 ,(startPointY *1) +.2),
+    //     // new THREE.Vector3(endPointX, 10 ,endPointY),
+    //     // new THREE.Vector3(startPointX,10,startPointY),
+    //     // new THREE.Vector3((endPointX * 1) +.2, 10 ,(endPointY *1)+.2),
+        
+    //     new THREE.Vector3(-1, 0, -1), //c
+    //     new THREE.Vector3(-1, 0, 1), //b
+    //     new THREE.Vector3(1,0, 1), //a
+       
+        
+    //     new THREE.Vector3(1, 0, 1), //a
+    //     new THREE.Vector3(1, 0, -1), //d
+    //     new THREE.Vector3(-1, 0, -1), //c
+    
+    //     // new THREE.Vector3(-1, -1, 1), //b
+    //     // new THREE.Vector3(1, -1, -1), //d
+    //     // new THREE.Vector3(1, 1, 1), //a
+    
+    //     // new THREE.Vector3(-1, 1, -1), //c
+    //     // new THREE.Vector3(1, -1, -1), //d
+    //     // new THREE.Vector3(-1, -1, 1), //b
+    // ]
+    // geometry.setFromPoints(points)
+    // geometry.computeVertexNormals()
+
+    // const mesh = new THREE.Mesh(geometry, material)
+    // init.scene.add(mesh)
+    const material = new THREE.MeshNormalMaterial()
+    const points = []
+    // points.push( new THREE.Vector3((startPointX * 1) +.2, 20 ,(startPointY *1) +.2))
+    // points.push(new THREE.Vector3(endPointX, 20 ,endPointY))
+    // points.push(new THREE.Vector3(startPointX,20,startPointY))
+    // points.push(new THREE.Vector3((endPointX * 1) +.2, 20 ,(endPointY *1)+.2))
+    points.push(new THREE.Vector3(startPointX, 0, startPointY))
+    points.push(new THREE.Vector3(endPointX, 0, endPointY))
+     points.push(new THREE.Vector3(startPointX, 0, -10))
+    // points.push(new THREE.Vector3(-5, 0, -10))
+    let geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+    const mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color:0xeb4034, side:THREE.DoubleSide,transparent: true }))
+    // let line = new THREE.Line(
+    //     geometry,
+    //      new THREE.LineBasicMaterial({ color: 0x888888 })
+    // )
+    init.scene.add(mesh)
+
+    /*let startPointX = x1;
+    let startPointY = y1;
+    let endPointX = x2;
+    let endPointY = y2;
+    var geometry = new THREE.BufferGeometry ();  
+        geometry.vertices.push(
+            new THREE.Vector3((startPointX * 1) +.2, 0 ,(startPointY *1) +.2),//START LEFT
+            new THREE.Vector3(endPointX, 0 ,endPointY),//END LEFT 
+            new THREE.Vector3(startPointX,0,startPointY),//START RIGHT
+            new THREE.Vector3((endPointX * 1) +.2, 0 ,(endPointY *1)+.2)//END RIGHT
+        ); 
+        geometry.faces.push(
+            new THREE.Face3(2,1,0),//use vertices of rank 2,1,0
+            new THREE.Face3(3,1,0)//vertices[3],1,2...
+        );
+       var material = new THREE.MeshBasicMaterial({color:0xeb4034, side:THREE.DoubleSide,transparent: true })
+           mesh = new THREE.Mesh(geometry, material );
+           mesh.scale.set(3,1,1);
+           init.scene.add( mesh );*/
+}
 function detectWebGL() {
     // Check for the WebGL rendering context
     if (!!window.WebGLRenderingContext) {
@@ -52,7 +127,7 @@ function detectWebGL() {
 let material = {
     cube: new THREE.MeshLambertMaterial({
         //   map:THREE.ImageUtils.loadTexture("assets/Road texture.png"),
-        color: 0xffffff,
+        color: 0x000000,
         combine: THREE.MixOperation,
         side: THREE.DoubleSide
     }),
@@ -76,7 +151,7 @@ class sceneSetup {
         this.rendering();
     }
     rendering() {
-        this.renderer = new THREE.WebGLRenderer({ antialias: true,alpha: true  });
+        this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.setClearColor(0x000000,0);
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
@@ -91,13 +166,13 @@ class sceneSetup {
         // this.controls.maxAzimuthAngle = -115 / 120;
     }
     addingCube() {
-        this.geo = new THREE.BoxBufferGeometry(1, 1, 1);
+        this.geo = new THREE.BoxBufferGeometry(2, 500, 2);
         this.mat = material.cube;
         this.camPoint = new THREE.Mesh(this.geo, this.mat);
         this.scene.add(this.camPoint);
-        this.camPoint.position.set(0, 0, 0);
-        arrayObjects.push(this.camPoint);
-
+        this.camPoint.position.set(97, 0, 24);
+        this.axesHelper = new THREE.AxesHelper( 5 );
+        this.scene.add( this.axesHelper );
     }
     ambientLight(ambientColor) {
         this.ambiLight = new THREE.AmbientLight(0xffffff);
@@ -122,18 +197,6 @@ const onWindowResize=()=> {
 
 window.addEventListener('resize', onWindowResize, false);
 
-const onDocumentMouseDown = (event) => {
-    event.preventDefault();
-    const rect = init.renderer.domElement.getBoundingClientRect();        
-    mouse.x = ( ( event.clientX - rect.left ) / ( rect.right - rect.left ) ) * 2 - 1;
-    mouse.y = - ( ( event.clientY - rect.top ) / ( rect.bottom - rect.top) ) * 2 + 1;
-    raycaster.setFromCamera( mouse, init.cameraMain );
-    let intersects = raycaster.intersectObjects( arrayObjects,true );
-    if ( intersects.length > 0 ) {	 
-        SELECTED = intersects[ 0 ].object;	
-        console.log('SELECTED--->',SELECTED);
-    }
-}
 
 class objLoad {
     constructor() {
@@ -145,6 +208,7 @@ class objLoad {
         this.loader.load(gltfpath, gltf => {            
             this.mesh = gltf.scene;
             this.mesh.position.set(0, 0, 0);
+            this.mesh.scale.set(13, 13, 13);
             init.scene.add(this.mesh);
         });
     }

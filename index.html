@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>VIEWER SETUP</title>
+        <title>Fanisko</title>
     </head>
     <style>
         html, body {
             background-color: aqua;
-  height: 100%;
-  margin: 0;
-   padding: 0;
-   /* overflow: hidden;  */
-}
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+         /* overflow: hidden;  */
+        }
         .wrapper{
             margin:auto;
             width:100%;
@@ -20,7 +21,9 @@
             width:100%;
             height:100%; 
         }
+       
         .ui-wrapper{
+        /* pointer-events: none; */
             position: absolute;
             /* background-color: bisque; */
             height: 100%;
@@ -41,7 +44,7 @@
             bottom: 5%;
         }
         .countryContainer{
-            background-color: red;
+            /* background-color: red; */
             height: 7%;
             width:30%;
             float: left;
@@ -50,7 +53,7 @@
         }
         .teamScoreContainer{
             /* position: absolute; */
-            background-color: rgb(144, 144, 9);
+            /* background-color: rgb(144, 144, 9); */
             height: 7%;
             width:30%;
             margin-top:8%;
@@ -65,26 +68,63 @@
             margin-left:5%;
         }
         .teamFlagContainer{
-            background-color: blue;
+            /* background-color: blue; */
             float:left
         }
         .scoreWrapper{
-            background-color: blueviolet;
+            /* background-color: blueviolet; */
             float: right;
             margin-right:50px;
         }
         .scoreWrapper h1{
             margin: 0;
             font-size: 45px;
-            background-color: black;
+            /* background-color: black; */
             color:white;
-            font-family: Arial, sans-serif;
+            /* font-family: Arial, sans-serif; */
         }
         .scoreWrapper p{
             margin: 0;
             font-size:25px;
-            background-color: red;
+            color:white;
+            /* background-color: red; */
             /* width:50%; */
+        }
+        .inningsOneCountryWrapper {
+            /* background-color: blue; */
+            float: left;
+            width: 50%;
+            text-align: center;
+        }
+        .inningsTwoCountryWrapper{
+            /* background-color: yellow; */
+            float: right;
+            width: 50%;
+            text-align: center;
+        }
+        .inningsOneCountryWrapper p , .inningsTwoCountryWrapper p{
+            background-color: black;
+            /* font-family: Arial, sans-serif; */
+            font-size: 35px;
+            color:white;
+            border-radius: 15px; 
+            border: 1px solid white;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            width: 80%;
+            margin:auto
+        }
+        .firstInningsPlayer{
+            background-color: grey;
+            width:100%;
+            height:100%;
+            
+        }
+        .secondInningsPlayer{
+            background-color: green;
+            width:100%;
+            height:100%;
+            display: none;
         }
     </style>
     <script src="js/libs/jquery-3.6.4.min.js"></script>   
@@ -94,7 +134,14 @@
                 <div class="headerContainer">
                     <img src="assets/ICC-World-Test-Championship.jpg">
                 </div>
-                    <div class="countryContainer"></div>
+                    <div class="countryContainer">
+                        <div class="inningsOneCountryWrapper">
+                            <p class="inningsOneCountry" id="inningsOneCountry" ></p>
+                        </div>    
+                        <div class="inningsTwoCountryWrapper">
+                            <p class="inningsTwoCountry" id="inningsTwoCountry"></p>
+                        </div>                      
+                    </div>
                     <div class="teamScoreContainer">
                         <div class="countryFlag">
                             <div class="teamFlagContainer">
@@ -106,15 +153,20 @@
                             </div>
                         </div>
                     </div>
+                    <!-- PLAYER SCROLLER -->
                     <div class="playerScrollerContainer">
+                        <div class="firstInningsPlayer">
+                        </div>
+                        <div class="secondInningsPlayer">
+                        </div>
                     </div>
                 <div class="footerContainer" id="footerContainer">
                 </div>
             </div>
-         <div id = "canvas"></div>
+         <div class="canvas"id = "canvas"></div>
       </div>
     </body>
     <script src="js/ui.js"></script>
-    <!-- <script type="module"src="js/config.js"></script> -->
+    <script type="module"src="js/config.js"></script>
     
 </html>
