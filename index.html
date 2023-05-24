@@ -40,7 +40,7 @@
         }
        
         .countryContainer{
-            background-color: green;
+            /* background-color: green; */
             /* height: 7%; */
             width:30%;
             float: left;
@@ -48,13 +48,13 @@
             margin-left:5%;
         }
          .inningsOneCountryWrapper {
-            background-color: blue;
+            /* background-color: blue; */
             float: left;
             width: 50%;
             text-align: center;
         }
         .inningsTwoCountryWrapper{
-            background-color: yellow;
+            /* background-color: yellow; */
             float: right;
             width: 50%;
             text-align: center;
@@ -75,7 +75,7 @@
 
         .teamScoreContainer{
             /* position: absolute; */
-            background-color: rgb(144, 144, 9);
+            /* background-color: rgb(144, 144, 9); */
             width:25%;
             margin-top:8%;
             float:right;
@@ -83,7 +83,7 @@
         }
       
         .teamFlagContainer{
-            background-color: blue;
+            /* background-color: blue; */
             float:left
         }
         .teamFlagContainer img{
@@ -92,7 +92,7 @@
         }
 
         .scoreWrapper{
-            background-color: blueviolet;
+            /* background-color: blueviolet; */
             float: right;
             margin-right:0px;
         }
@@ -110,33 +110,40 @@
         }
        
         .playerScrollerContainer{
-            background-color: brown;
+            /* background-color: brown; */
             margin-top:50%;
-            width: 70px;
-            height:30%;
+            width: 50px;
+            height:20%;
             margin-left:5%;
         }
+        .playerScrollerContainer img{
+            display: block;
+           margin-left:auto;
+           margin-right:auto;
+        }
         .firstInningsPlayer{
-            background-color: grey;
+            /* background-color: grey; */
             width:100%;
             height:100%;
             
         }
         .secondInningsPlayer{
-            background-color: green;
+            /* background-color: green; */
             width:100%;
             height:100%;
             display: none;
         }
+
+        /* FOOTER */
         .footerContainer{
-            background-color: grey;
+            /* background-color: grey; */
             width: 100%;
             position: absolute;
             bottom: 5%;
             text-align:center;
         }
         .footerContainer ul{
-            background-color:yellow; 
+            /* background-color:yellow;  */
             margin:auto;
             width:100%;
             
@@ -194,10 +201,12 @@
                     </div>
                     <!-- PLAYER SCROLLER -->
                     <div class="playerScrollerContainer">
-                        <div class="firstInningsPlayer" id="firstInningsPlayer">
-                        </div>
-                        <div class="secondInningsPlayer" id="secondInningsPlayer">
-                        </div>
+                        <img src="assets/upArrow.png"></img>
+                            <div class="firstInningsPlayer" id="firstInningsPlayer">
+                            </div>
+                            <div class="secondInningsPlayer" id="secondInningsPlayer">
+                            </div>
+                        <img src="assets/downArrow.png"></img>
                     </div>
                 <div class="footerContainer" id="footerContainer">
                 </div>
