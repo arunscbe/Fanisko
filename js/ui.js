@@ -53,12 +53,12 @@ const addPlayer = (data,divId) => {
 const scores = (runData)=>{
     let cont = document.getElementById('footerContainer');
     let ul = document.createElement('ul');
-        ul.setAttribute('style', 'width:100%;text-align:center;float:left');
+        // ul.setAttribute('style', 'width:100%;text-align:center;float:left');
         ul.setAttribute('class', 'scoreList');
     runData.map((data)=>{
         let li = document.createElement('li');
         li.innerHTML = data.run; 
-        li.setAttribute('style', `display: inline-block;font-size: 10px;margin-left:10px; padding-left:10px; padding-right:10px;padding-top:10px;padding-bottom:10px; background-color:black; color:${data.color}; border-radius: 10px; border: 1px solid red;font-family: Arial, sans-serif;`);    
+        li.setAttribute('style', `color:${data.color};`);    
         li.setAttribute('id', `${data.id}`);
         ul.appendChild(li);     
     });
