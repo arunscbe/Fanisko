@@ -43,10 +43,11 @@ const playerDisplay = (_resData) => {
 }
 const addPlayer = (data,divId) => {
     data.map((players)=>{
-        let p = document.createElement('p');
-        p.innerHTML = players.player_name;
-        p.setAttribute('id', `${players.playerid}`);   
-        divId.appendChild(p);       
+        let _img = document.createElement('img');
+        _img.setAttribute('style','width:40px;display: block;margin-left: auto;margin-right: auto;');
+        _img.setAttribute('src', "assets/user.png");
+        _img.setAttribute('id', `${players.playerid}`); 
+        divId.appendChild(_img);
     })  
 }
 const scores = (runData)=>{
