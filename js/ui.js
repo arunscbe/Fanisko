@@ -1,13 +1,12 @@
 $(document).ready(function(){
-    let C =''; 
     $.ajax({
         url: "https://d1u2maujpzk42.cloudfront.net/matchdata/1198/players.json",
         type: 'GET',
         success: function(res) {
-            C = res;
-            console.log(res);  
-            let _P = res; 
-            countryDisplay(res.first_innings_shortcode,res.second_innings_shortcode);         
+            const _resData = res;
+            console.log(_resData);  
+            countryDisplay(_resData);  
+            playerDisplay(_resData);       
         }
     });
     var runData = [
@@ -30,20 +29,35 @@ $(document).ready(function(){
         $('.secondInningsPlayer').show();
     });
 })
-const countryDisplay = (firstInnings,secondInnings) =>{
-    document.getElementById('inningsOneCountry').innerHTML = firstInnings;
-    document.getElementById('inningsTwoCountry').innerHTML = secondInnings;
-
+const countryDisplay = (_resData) =>{
+    document.getElementById('inningsOneCountry').innerHTML = _resData.first_innings_shortcode;
+    document.getElementById('inningsTwoCountry').innerHTML = _resData.second_innings_shortcode;
+}
+const playerDisplay = (_resData) => {
+    const _firstInnPlayer = _resData.first_innings_players;
+    const _secondInnPlayer = _resData.second_innings_players;
+    const playerFirstInn = document.getElementById('firstInningsPlayer');
+    const playerSecondInn = document.getElementById('secondInningsPlayer');
+    addPlayer(_firstInnPlayer,playerFirstInn);
+    addPlayer(_secondInnPlayer,playerSecondInn);
+}
+const addPlayer = (data,divId) => {
+    data.map((players)=>{
+        let p = document.createElement('p');
+        p.innerHTML = players.player_name;
+        p.setAttribute('id', `${players.playerid}`);   
+        divId.appendChild(p);       
+    })  
 }
 const scores = (runData)=>{
     let cont = document.getElementById('footerContainer');
     let ul = document.createElement('ul');
-        ul.setAttribute('style', 'padding-left:15%;width:100%;text-align:center;margin:auto');
+        ul.setAttribute('style', 'width:100%;text-align:center;float:left');
         ul.setAttribute('class', 'scoreList');
     runData.map((data)=>{
         let li = document.createElement('li');
         li.innerHTML = data.run; 
-        li.setAttribute('style', `display: inline-block;font-size: 40px;margin-left:15px; padding-left:40px; padding-right:40px;padding-top:10px;padding-bottom:10px; background-color:black; color:${data.color}; border-radius: 15px; border: 1px solid red;font-family: Arial, sans-serif;`);    
+        li.setAttribute('style', `display: inline-block;font-size: 10px;margin-left:10px; padding-left:10px; padding-right:10px;padding-top:10px;padding-bottom:10px; background-color:black; color:${data.color}; border-radius: 10px; border: 1px solid red;font-family: Arial, sans-serif;`);    
         li.setAttribute('id', `${data.id}`);
         ul.appendChild(li);     
     });
@@ -52,10 +66,7 @@ const scores = (runData)=>{
 const wagonWheelDisplay = (data) => {
     console.log(data);
 }
-const playerDisplay = () => {
-    console.log('ererer...');
-    // alert('eerer....');
-}
+
 const teamsScore =() => {
    
 }
