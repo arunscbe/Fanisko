@@ -77,13 +77,13 @@ html, body {
 }
 
 .teamFlagContainer{
-    background-color: blue;
+    /* background-color: blue; */
     float:left
 }
 .teamFlagContainer img{
     width:40px;
-    border-radius: 5px;
-    margin-top:-3px !important;
+    border-radius: 20px;
+    margin-top:-3px;
 }
 
 .scoreWrapper{
@@ -195,7 +195,7 @@ bottom: 8%;
 }
 /* ----------------------------------------------------------RIGHT SCORE */
 .teamScoreContainer{
-    background-color: red;
+    /* background-color: red; */
 width:20%;
 margin-top:2%;
 margin-left:100%;

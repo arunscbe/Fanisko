@@ -57,7 +57,7 @@ const playerDisplay = (_resData) => {
 const addPlayer = (data,divId) => {
     data.map((players)=>{
         let _img = document.createElement('img');
-        _img.setAttribute('style','display: block;margin-left: auto;margin-right: auto;width:32px;border-radius: 50%;');
+        // _img.setAttribute('style','display: block;margin-left: auto;margin-right: auto;width:32px;border-radius: 50%;');
         _img.setAttribute('src', `${players.player_image}`);
         _img.setAttribute('id', `${players.playerid}`); 
         divId.appendChild(_img);
