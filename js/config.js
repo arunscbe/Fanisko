@@ -17,7 +17,7 @@ let testRun = {
 $(document).ready(function () {
     let detect = detectWebGL();
     if (detect == 1) {
-        init = new sceneSetup(70, 1, 1000, 400, 400, 400);
+        init = new sceneSetup(70, 1, 1000, 100, 100, 100);//400,400,400
         modelLoad = new objLoad();
           modelLoad.Model();
         //   console.log('--->',_testRun);
@@ -26,7 +26,7 @@ $(document).ready(function () {
         });
           landingPoints.map((data)=>{
             // console.log(data);
-            addLines(data[0],data[1]);
+            // addLines(data[0],data[1]);
           });
         //  addLines(0,0,97,24);
     } else if (detect == 0) {
@@ -40,7 +40,7 @@ $(document).ready(function () {
 
 });
 
-function addLines(x1,y1,x2,y2,color){ // 2,4,-1,4
+function addLines(x1,y1,x2,y2,angle,run){ // 2,4,-1,4
     let startPointX = x1;
     let startPointY = y1;
     let endPointX = x2;
@@ -89,13 +89,17 @@ function addLines(x1,y1,x2,y2,color){ // 2,4,-1,4
     // points.push(new THREE.Vector3(-5, 0, -10))
     let geometry = new THREE.BufferGeometry().setFromPoints(points);
 
-    const mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color:0xeb4034, side:THREE.DoubleSide,transparent: true }))
+    const mesh = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial({ color:0xf54242,side:THREE.DoubleSide }))
     // let line = new THREE.Line(
     //     geometry,
     //      new THREE.LineBasicMaterial({ color: 0x888888 })
     // )
     init.scene.add(mesh)
-
+    if(run === 6){
+        console.log(mesh);
+        // mesh.material.color.setHex(0xffffff); 
+        mesh.material.needsUpdate = true;
+    }
     /*let startPointX = x1;
     let startPointY = y1;
     let endPointX = x2;
@@ -245,8 +249,7 @@ class objLoad {
                             side: THREE.DoubleSide
                         })
                     }
-                }
-               
+                }               
             })
             this.mesh.scale.set(13, 13, 13);
             init.scene.add(this.mesh);
@@ -259,5 +262,18 @@ export const displayRunMesh = (data) => {
     _displayPlayerMesh.material.map = texLoader.load(data.player_image);
     _displayPlayerMesh.needsUpdate = true;
     _displayPlayerMesh.visible = true;
-    console.log(_displayPlayerMesh);
+}
+
+export const wagonWheel = (data) => {
+    let _runs = data.runs;
+    let _balls = data.balls;
+    data.balls_details.map((data)=>{
+        let _Wx = data.battingAnalysis.shots.wagonWheel.x;
+        let _Wy = data.battingAnalysis.shots.wagonWheel.y;
+        let _Wa = data.battingAnalysis.shots.angle;
+        let _Wr = data.runsBat;
+        console.log(data.runsBat);
+        addLines(0,0,_Wx,_Wy,_Wa,_Wr);
+    });
+    
 }

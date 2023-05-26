@@ -1,4 +1,4 @@
-import {displayRunMesh} from './config.js';
+import {displayRunMesh,wagonWheel} from './config.js';
 
 $(document).ready(function(){
     let _resData;
@@ -7,7 +7,7 @@ $(document).ready(function(){
         type: 'GET',
         success: function(res) {
              _resData = res;
-            console.log(_resData);  
+            // console.log(_resData);  
             countryDisplay(_resData);  
             playerDisplay(_resData); 
             runsDisplay(_resData.first_innings_score,_resData.first_innings_wicket,_resData.first_innings_over,_resData.first_innings_team_logo);      
@@ -71,8 +71,9 @@ const playersRunDetails = (_playerId) => {
         type: 'GET',
         success: function(res) {
             const _resData = res;
-            console.log(_resData); 
+            // console.log(_resData); 
             displayRunMesh(_resData);// INSIDE CONFIQ.JS   
+            wagonWheel(_resData);
         }
     });
 }
