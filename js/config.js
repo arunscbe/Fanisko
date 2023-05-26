@@ -226,7 +226,6 @@ class objLoad {
             this.mesh.traverse((child)=>{
                 if(child.type ==='Mesh'){
                     if(child.name === 'playerImage'){
-                        console.log('PLAYERIMAGE====>',child);
                         child.material = new THREE.MeshBasicMaterial({
                             transparent:true,
                             opacity:1,
@@ -234,6 +233,15 @@ class objLoad {
                             side: THREE.DoubleSide
                         })
                         child.visible = false;
+                    }
+                    else if(child.name === 'playerImageBg'){
+                        child.material = new THREE.MeshBasicMaterial({
+                            map:texLoader.load('assets/bg-tex.png'),
+                            transparent:true,
+                            opacity:1,
+                            combine: THREE.MixOperation,
+                            side: THREE.DoubleSide
+                        })
                     }
                 }
                
