@@ -1,3 +1,5 @@
+import {displayRunMesh} from './config.js';
+
 $(document).ready(function(){
     let _resData;
     $.ajax({
@@ -69,7 +71,8 @@ const playersRunDetails = (_playerId) => {
         type: 'GET',
         success: function(res) {
             const _resData = res;
-            console.log(_resData);    
+            console.log(_resData); 
+            displayRunMesh(_resData);// INSIDE CONFIQ.JS   
         }
     });
 }

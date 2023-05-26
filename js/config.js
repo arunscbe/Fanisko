@@ -220,13 +220,34 @@ class objLoad {
     }
 
     Model() {
-        console.log("sdsd...");
         this.loader = new GLTFLoader();
         this.loader.load(gltfpath, gltf => {            
             this.mesh = gltf.scene;
-            this.mesh.position.set(0, 0, 0);
+            this.mesh.traverse((child)=>{
+                if(child.type ==='Mesh'){
+                    if(child.name === 'playerImage'){
+                        console.log('PLAYERIMAGE====>',child);
+                        child.material = new THREE.MeshBasicMaterial({
+                            transparent:true,
+                            opacity:1,
+                            combine: THREE.MixOperation,
+                            side: THREE.DoubleSide
+                        })
+                        child.visible = false;
+                    }
+                }
+               
+            })
             this.mesh.scale.set(13, 13, 13);
             init.scene.add(this.mesh);
         });
     }
+}
+
+export const displayRunMesh = (data) => {
+    let _displayPlayerMesh = init.scene.getObjectByName('playerImage');
+    _displayPlayerMesh.material.map = texLoader.load(data.player_image);
+    _displayPlayerMesh.needsUpdate = true;
+    _displayPlayerMesh.visible = true;
+    console.log(_displayPlayerMesh);
 }
