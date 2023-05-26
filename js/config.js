@@ -6,13 +6,29 @@ let init, modelLoad;
 let gltfpath = "assets/cricket_stadium.glb";
 let texLoader = new THREE.TextureLoader();
 
+let landingPoints = [[97,24,'3955e3'],[50,-50,'de071c'],[-80,25,'fae105']]
+let testRun = {
+    "One":[{"x":25,"y":45,"color":"0xffffff"},{"x":25,"y":45,"color":"0xffffff"},{"x":25,"y":45,"color":"0xffffff"}],
+    "Two":[{"x":25,"y":45,"color":"0xffff00"},{ "x":25,"y":45,"color":"0xffff00"},{ "x":25,"y":45,"color":"0xffff00"}],
+    "Three":[{"x":25,"y":45,"color":"0xe1fa02"},{ "x":25,"y":45,"color":"0xe1fa02"},{ "x":25,"y":45,"color":"0xe1fa02"}],
+    "Four":[{"x":25,"y":45,"color":"0x2d43eb"},{ "x":25,"y":45,"color":"0x2d43eb"},{ "x":25,"y":45,"color":"0x2d43eb"}],
+    "Six":[{"x":25,"y":45,"color":"0xe8070e"},{ "x":25,"y":45,"color":"0xe8070e"},{ "x":25,"y":45,"color":"0xe8070e"}],
+}
 $(document).ready(function () {
     let detect = detectWebGL();
     if (detect == 1) {
         init = new sceneSetup(70, 1, 1000, 400, 400, 400);
         modelLoad = new objLoad();
-         modelLoad.Model();
-         addLines(0,0,97,24);
+          modelLoad.Model();
+        //   console.log('--->',_testRun);
+        testRun.One.map((data)=>{
+            // console.log(data);
+        });
+          landingPoints.map((data)=>{
+            // console.log(data);
+            addLines(data[0],data[1]);
+          });
+        //  addLines(0,0,97,24);
     } else if (detect == 0) {
         alert("PLEASE ENABLE WEBGL IN YOUR BROWSER....");
     } else if (detect == -1) {
@@ -24,7 +40,7 @@ $(document).ready(function () {
 
 });
 
-function addLines(x1,y1,x2,y2){ // 2,4,-1,4
+function addLines(x1,y1,x2,y2,color){ // 2,4,-1,4
     let startPointX = x1;
     let startPointY = y1;
     let endPointX = x2;
@@ -63,13 +79,13 @@ function addLines(x1,y1,x2,y2){ // 2,4,-1,4
     // init.scene.add(mesh)
     const material = new THREE.MeshNormalMaterial()
     const points = []
-    // points.push( new THREE.Vector3((startPointX * 1) +.2, 20 ,(startPointY *1) +.2))
-    // points.push(new THREE.Vector3(endPointX, 20 ,endPointY))
-    // points.push(new THREE.Vector3(startPointX,20,startPointY))
-    // points.push(new THREE.Vector3((endPointX * 1) +.2, 20 ,(endPointY *1)+.2))
-    points.push(new THREE.Vector3(startPointX, 0, startPointY))
-    points.push(new THREE.Vector3(endPointX, 0, endPointY))
-     points.push(new THREE.Vector3(startPointX, 0, -10))
+    points.push( new THREE.Vector3((startPointX * 1) +1, 20 ,(startPointY *1) +1))
+    points.push(new THREE.Vector3(endPointX, 20 ,endPointY))
+    points.push(new THREE.Vector3(startPointX,20,startPointY))
+    points.push(new THREE.Vector3((endPointX * 1) +1, 20 ,(endPointY *1)+1))
+    // points.push(new THREE.Vector3(startPointX, 0, startPointY))
+    // points.push(new THREE.Vector3(endPointX, 0, endPointY))
+    //  points.push(new THREE.Vector3(startPointX, 0, -10))
     // points.push(new THREE.Vector3(-5, 0, -10))
     let geometry = new THREE.BufferGeometry().setFromPoints(points);
 
@@ -166,7 +182,7 @@ class sceneSetup {
         // this.controls.maxAzimuthAngle = -115 / 120;
     }
     addingCube() {
-        this.geo = new THREE.BoxBufferGeometry(2, 500, 2);
+        this.geo = new THREE.BoxBufferGeometry(2, 2, 2);
         this.mat = material.cube;
         this.camPoint = new THREE.Mesh(this.geo, this.mat);
         this.scene.add(this.camPoint);

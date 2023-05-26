@@ -70,19 +70,20 @@ html, body {
 .teamScoreContainer{
     /* position: absolute; */
     /* background-color: rgb(144, 144, 9); */
-    width:25%;
+    width:28%;
     margin-top:8%;
     float:right;
     margin-right:6%;
 }
 
 .teamFlagContainer{
-    /* background-color: blue; */
+    background-color: blue;
     float:left
 }
 .teamFlagContainer img{
     width:40px;
     border-radius: 5px;
+    margin-top:-3px !important;
 }
 
 .scoreWrapper{
@@ -115,6 +116,10 @@ html, body {
     display: block;
    margin-left:auto;
    margin-right:auto;
+}
+.inningsContainer{
+    width:100%;
+    height:100%;
 }
 .firstInningsPlayer{
     /* background-color: grey; */
@@ -190,14 +195,15 @@ bottom: 8%;
 }
 /* ----------------------------------------------------------RIGHT SCORE */
 .teamScoreContainer{
-width:15%;
+    background-color: red;
+width:20%;
 margin-top:2%;
 margin-left:100%;
 padding-right: 10px;
 }
 
 .teamFlagContainer{
-/* background-color: blue; */
+background-color: blue;
 float:left
 }
 .teamFlagContainer img{

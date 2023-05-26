@@ -1,12 +1,14 @@
 $(document).ready(function(){
+    let _resData;
     $.ajax({
         url: "https://d1u2maujpzk42.cloudfront.net/matchdata/1198/players.json",
         type: 'GET',
         success: function(res) {
-            const _resData = res;
+             _resData = res;
             console.log(_resData);  
             countryDisplay(_resData);  
-            playerDisplay(_resData);       
+            playerDisplay(_resData); 
+            runsDisplay(_resData.first_innings_score,_resData.first_innings_wicket,_resData.first_innings_over,_resData.first_innings_team_logo);      
         }
     });
     var runData = [
@@ -23,15 +25,26 @@ $(document).ready(function(){
     $('.inningsOneCountry').click(()=>{
         $('.firstInningsPlayer').show();
         $('.secondInningsPlayer').hide();
+        runsDisplay(_resData.first_innings_score,_resData.first_innings_wicket,_resData.first_innings_over,_resData.first_innings_team_logo);
     });
     $('.inningsTwoCountry').click(()=>{
         $('.firstInningsPlayer').hide();
         $('.secondInningsPlayer').show();
+        runsDisplay(_resData.second_innings_score,_resData.second_innings_wicket,_resData.second_innings_over,_resData.second_innings_team_logo);
+    });
+    $('.inningsContainer').click((e)=>{
+        playersRunDetails(e.target.id);       
     });
 })
+const runsDisplay = (score,wicket,overs,teamLogo) => {
+    document.getElementById('teamScore').innerHTML = score + ' / ' + wicket;
+    document.getElementById('overs').innerHTML = overs + ' Ovr';
+    document.getElementById('teamFlag').src =teamLogo;
+}
 const countryDisplay = (_resData) =>{
     document.getElementById('inningsOneCountry').innerHTML = _resData.first_innings_shortcode;
     document.getElementById('inningsTwoCountry').innerHTML = _resData.second_innings_shortcode;
+   
 }
 const playerDisplay = (_resData) => {
     const _firstInnPlayer = _resData.first_innings_players;
@@ -44,11 +57,21 @@ const playerDisplay = (_resData) => {
 const addPlayer = (data,divId) => {
     data.map((players)=>{
         let _img = document.createElement('img');
-        _img.setAttribute('style','display: block;margin-left: auto;margin-right: auto;');
-        _img.setAttribute('src', "assets/user.png");
+        _img.setAttribute('style','display: block;margin-left: auto;margin-right: auto;width:32px;border-radius: 50%;');
+        _img.setAttribute('src', `${players.player_image}`);
         _img.setAttribute('id', `${players.playerid}`); 
         divId.appendChild(_img);
     })  
+}
+const playersRunDetails = (_playerId) => {
+    $.ajax({
+        url: `https://d1u2maujpzk42.cloudfront.net/matchdata/1198/${_playerId}.json`,
+        type: 'GET',
+        success: function(res) {
+            const _resData = res;
+            console.log(_resData);    
+        }
+    });
 }
 const scores = (runData)=>{
     let cont = document.getElementById('footerContainer');
