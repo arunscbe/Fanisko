@@ -229,6 +229,7 @@ class objLoad {
                         child.material = new THREE.MeshBasicMaterial({
                             transparent:true,
                             opacity:1,
+                            depthTest: false,
                             combine: THREE.MixOperation,
                             side: THREE.DoubleSide
                         })
@@ -238,7 +239,8 @@ class objLoad {
                         child.material = new THREE.MeshBasicMaterial({
                             map:texLoader.load('assets/bg-tex.png'),
                             transparent:true,
-                            opacity:1,
+                            opacity:.8,
+                            depthTest: true,
                             combine: THREE.MixOperation,
                             side: THREE.DoubleSide
                         })
