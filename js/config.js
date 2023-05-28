@@ -1,6 +1,7 @@
 import * as THREE from './libs/three.module.js';
  import { GLTFLoader } from './libs/GLTFLoader.js';
 import {OrbitControls} from './libs/OrbitControls.js';
+import { scoreMeshData } from './data.js';
 // import {onWindowResize} from './resize.js'
 let init, modelLoad;
 let gltfpath = "assets/cricket_stadium.glb";
@@ -14,12 +15,27 @@ let testRun = {
     "Four":[{"x":25,"y":45,"color":"0x2d43eb"},{ "x":25,"y":45,"color":"0x2d43eb"},{ "x":25,"y":45,"color":"0x2d43eb"}],
     "Six":[{"x":25,"y":45,"color":"0xe8070e"},{ "x":25,"y":45,"color":"0xe8070e"},{ "x":25,"y":45,"color":"0xe8070e"}],
 }
+
+                // runs (61,47,-55 ),sixes (61,47,-10 ), fours(61,60.9,-55) runball(61,60.9,-10)
 $(document).ready(function () {
     let detect = detectWebGL();
     if (detect == 1) {
-        init = new sceneSetup(70, 1, 1000, 100, 100, 100);//400,400,400
+        init = new sceneSetup(130, 1, 1000, 100, 50, -40);//100,100,50
         modelLoad = new objLoad();
           modelLoad.Model();
+           //FOR SCORE MESH LOADING
+           scoreMeshData.map((data)=>{
+            let material = new THREE.MeshBasicMaterial({ transparent: true ,opacity:1,side:THREE.DoubleSide });
+            const geometry = new THREE.PlaneGeometry( data.scaleX, data.scaleY );
+            let planeScore = new THREE.Mesh(geometry, material);        
+            init.scene.add(planeScore)
+            planeScore.name ="score_" + data.name;
+            planeScore.position.set(data.x,data.y,data.z);
+            planeScore.rotation.set(0,Math.PI/2,0);
+            planeScore.visible=false;
+          });
+         
+        //   modelLoad.groundRef();
         //   console.log('--->',_testRun);
         testRun.One.map((data)=>{
             // console.log(data);
@@ -28,6 +44,8 @@ $(document).ready(function () {
             // console.log(data);
             // addLines(data[0],data[1]);
           });
+
+         
         //  addLines(0,0,97,24);
     } else if (detect == 0) {
         alert("PLEASE ENABLE WEBGL IN YOUR BROWSER....");
@@ -35,11 +53,76 @@ $(document).ready(function () {
         alert(detect);
         alert("YOUR BROWSER DOESNT SUPPORT WEBGL.....");
     }
-
-
-
 });
 
+var PIXEL_RATIO = (function () {
+    var ctx = document.createElement('canvas').getContext('2d'),
+        dpr = window.devicePixelRatio || 1,
+        bsr = ctx.webkitBackingStorePixelRatio ||
+              ctx.mozBackingStorePixelRatio ||
+              ctx.msBackingStorePixelRatio ||
+              ctx.oBackingStorePixelRatio ||
+              ctx.backingStorePixelRatio || 1;
+    return dpr / bsr;
+  })();
+
+
+  let createRetinaCanvas = function(w, h, ratio) {
+    if (!ratio) { ratio = PIXEL_RATIO; }
+    var can = document.createElement('canvas');
+    can.width = w * ratio;
+    can.height = h * ratio;
+    can.style.width = w + 'px';
+    can.style.height = h + 'px';
+    can.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
+    return can;
+  }
+
+  function scoreDisplay(data,name,size,right,rightCan) {
+    let text;
+    if(name === 'runball'){
+        text = data.runs + ' RUNS' + ' ('+ data.balls+'balls)'
+    }else if(name === 'runs'){
+        text = '1s- '+data.run_details[1]+', 2s- '+data.run_details[2]+', 3s- '+data.run_details[3];
+    }else if(name === 'fours'){
+        text = '4s- '+data.run_details[4];
+    }else if(name === 'sixes'){
+        text = '6s- '+data.run_details[6];
+    }else if(name === "profile"){
+        
+         text = data.name;
+    }
+    //create image
+    var bitmap = createRetinaCanvas(rightCan, 65);//300 ,65
+    var ctx = bitmap.getContext('2d', {antialias: false});
+    ctx.font = 'Bold '+size+'px Arial, sans-serif';//50 for six
+
+    ctx.beginPath();
+    ctx.rect(0, 0, 300, 65);
+    ctx.fillStyle = 'rgba(255,255,255,.3)'
+    ctx.fill();
+
+    ctx.fillStyle = 'blue';
+    ctx.textAlign = "center";
+    ctx.fillText(text, right, 45); //150 ,40
+
+    var texture = new THREE.Texture(bitmap) 
+    texture.needsUpdate = true;
+    let _SM = init.scene.getObjectByName('score_' + name);
+    _SM.material.map = texture;
+    _SM.visible = true;
+  }
+  export const displayRunMesh = (data) => {
+    let _displayPlayerMesh = init.scene.getObjectByName('playerImage');
+    _displayPlayerMesh.material.map = texLoader.load(data.player_image);
+    _displayPlayerMesh.needsUpdate = true;
+    _displayPlayerMesh.visible = true;
+    scoreDisplay(data,"runball",30,150,300);
+    scoreDisplay(data,"runs",35,150,300);
+    scoreDisplay(data,"sixes",40,100,200);
+    scoreDisplay(data,"fours",40,100,200);
+    scoreDisplay(data,"profile",30,100,200);
+}
 function addLines(x1,y1,x2,y2,angle,run){ // 2,4,-1,4
     let startPointX = x1;
     let startPointY = y1;
@@ -95,11 +178,11 @@ function addLines(x1,y1,x2,y2,angle,run){ // 2,4,-1,4
     //      new THREE.LineBasicMaterial({ color: 0x888888 })
     // )
     init.scene.add(mesh)
-    if(run === 6){
-        console.log(mesh);
-        // mesh.material.color.setHex(0xffffff); 
-        mesh.material.needsUpdate = true;
-    }
+    // if(run === 6){
+    //     console.log(mesh);
+    //     // mesh.material.color.setHex(0xffffff); 
+    //     mesh.material.needsUpdate = true;
+    // }
     /*let startPointX = x1;
     let startPointY = y1;
     let endPointX = x2;
@@ -178,6 +261,7 @@ class sceneSetup {
         this.renderer.outputEncoding = THREE.sRGBEncoding;
         this.container.appendChild(this.renderer.domElement);
         this.controls = new OrbitControls(this.cameraMain, this.renderer.domElement);
+        this.controls.target = new THREE.Vector3(50,50,-43.5);//50,0,-43.5
         // this.controls.minDistance = 100;
         // this.controls.maxDistance = 300;
         // this.controls.maxPolarAngle = Math.PI / 2 * 115 / 120;
@@ -190,8 +274,8 @@ class sceneSetup {
         this.mat = material.cube;
         this.camPoint = new THREE.Mesh(this.geo, this.mat);
         this.scene.add(this.camPoint);
-        this.camPoint.position.set(97, 0, 24);
-        this.axesHelper = new THREE.AxesHelper( 5 );
+        this.camPoint.position.set(100, 0, -24);
+        this.axesHelper = new THREE.AxesHelper( 15 );
         this.scene.add( this.axesHelper );
     }
     ambientLight(ambientColor) {
@@ -201,7 +285,7 @@ class sceneSetup {
     }
     animate() {
         requestAnimationFrame(this.animate.bind(this));
-        // this.controls.update();
+        this.controls.update();
         this.renderer.render(this.scene, this.cameraMain);
     }
     render() {
@@ -231,6 +315,7 @@ class objLoad {
                 if(child.type ==='Mesh'){
                     if(child.name === 'playerImage'){
                         child.material = new THREE.MeshBasicMaterial({
+                            // map:texLoader.load('tex/1234.png'),
                             transparent:true,
                             opacity:1,
                             depthTest: false,
@@ -239,7 +324,7 @@ class objLoad {
                         })
                         child.visible = false;
                     }
-                    else if(child.name === 'playerImageBg'){
+                   /* else if(child.name === 'playerImageBg'){
                         child.material = new THREE.MeshBasicMaterial({
                             map:texLoader.load('assets/bg-tex.png'),
                             transparent:true,
@@ -248,21 +333,28 @@ class objLoad {
                             combine: THREE.MixOperation,
                             side: THREE.DoubleSide
                         })
-                    }
+                    }*/
                 }               
             })
-            this.mesh.scale.set(13, 13, 13);
+            // this.mesh.rotation.set(0,THREE.MathUtils.degToRad(-210.49960341787693),0)
+            // X from data value should be placed as (-Z) and Y from data should be placed in (+X) and 3D object should be in origin from blender 
+            //  this.mesh.position.set(94.21,0,-20.13);  
+            this.mesh.scale.set(11.5, 11.5, 11.5);
+            init.scene.add(this.mesh);
+            console.log(this.mesh.children[0]);
+        });
+    }
+    groundRef(){
+        this.loader = new GLTFLoader();
+        this.loader.load('assets/groundRef.glb', gltf => {            
+            this.mesh = gltf.scene;
+            this.mesh.scale.set(11.5, 11.5, 11.5);
             init.scene.add(this.mesh);
         });
     }
 }
 
-export const displayRunMesh = (data) => {
-    let _displayPlayerMesh = init.scene.getObjectByName('playerImage');
-    _displayPlayerMesh.material.map = texLoader.load(data.player_image);
-    _displayPlayerMesh.needsUpdate = true;
-    _displayPlayerMesh.visible = true;
-}
+
 
 export const wagonWheel = (data) => {
     let _runs = data.runs;
@@ -272,7 +364,6 @@ export const wagonWheel = (data) => {
         let _Wy = data.battingAnalysis.shots.wagonWheel.y;
         let _Wa = data.battingAnalysis.shots.angle;
         let _Wr = data.runsBat;
-        console.log(data.runsBat);
         addLines(0,0,_Wx,_Wy,_Wa,_Wr);
     });
     
