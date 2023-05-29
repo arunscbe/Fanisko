@@ -18,6 +18,11 @@ $(document).ready(function(){
         {"run":4,"color":"blue","id":"four"},{"run":6,"color":"red","id":"six"},{"run":'ALL',"color":"grey","id":"all"}
     ];
     scores(runData);
+    $('.scoreList').click((e)=>{
+        e.preventDefault();
+        let _Data = e.target.id;
+        wagonWheelDisplay(_Data);
+    })
     // PLAYER DISPLAY 
     $('.inningsOneCountry').click(()=>{
         $('.firstInningsPlayer').show();
@@ -44,7 +49,6 @@ const countryDisplay = (_resData) =>{
    
 }
 const playerDisplay = (_resData) => {
-    console.log(_resData);
     const _firstInnPlayer = _resData.first_innings_players;
     const _secondInnPlayer = _resData.second_innings_players;
     const playerFirstInn = document.getElementById('firstInningsPlayer');
@@ -86,4 +90,11 @@ const scores = (runData)=>{
         ul.appendChild(li);     
     });
     cont.appendChild(ul);      
+}
+const wagonWheelDisplay = (data) => {
+    console.log(data);
+}
+
+const teamsScore =() => {
+   
 }

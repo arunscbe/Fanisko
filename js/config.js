@@ -113,6 +113,7 @@ var PIXEL_RATIO = (function () {
     _SM.visible = true;
   }
   export const displayRunMesh = (data) => {
+    console.log(data);
     let _displayPlayerMesh = init.scene.getObjectByName('playerImage');
     _displayPlayerMesh.material.map = texLoader.load(data.player_image);
     _displayPlayerMesh.needsUpdate = true;
@@ -341,7 +342,6 @@ class objLoad {
             //  this.mesh.position.set(94.21,0,-20.13);  
             this.mesh.scale.set(11.5, 11.5, 11.5);
             init.scene.add(this.mesh);
-            console.log(this.mesh.children[0]);
         });
     }
     groundRef(){
